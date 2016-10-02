@@ -1,0 +1,19 @@
+// Fiap - Soluções em Redes para ambientes Linux
+// github.com/2TRC2/DNS
+
+// Arquivo de configuração de zonas:
+
+// fiap.edu.br - Arquivo master de configuração da zona fiap.edu.br
+// Apartir do file "db.fiap.edu.br" serão declarados os registros de DNS do dominio fiap.edu.br
+
+zone "fiap.edu.br" {
+        type master;
+        file "/var/cache/bind/db.fiap.edu.br";
+};
+
+// Arquivo de configuração dos ponteiros reversos da zona
+
+zone "1.168.192.in-addr.arpa" {
+        type master;
+        file "/var/cache/bind/rv.fiap.edu.br";
+};

@@ -71,9 +71,3 @@ A primeira entrada do arquivo "named.conf.default-zones" contém uma zona do tip
 > A relação recebida na consulta acima representa o cluster de servidores DNS responsáveis pela composição do cluster
 > do root server "L.ROOT-SERVERS.NET" um dos 13 root servers que compoem a infra-estrutura de DNS, alias a relação completa 
 > destes servidores pode ser consultado neste [MAPA](http://www.root-servers.org/).
-
-## Configurando o bind como SOA de uma zona:
-
-O exemplo acima serviu para esquentar um pouco e para entendermos a estrutura basica do bind, para este laboratório executaremos o processo de configuração do bind como SOA "Start of Authority" do domínio fictício fiap.edu.br.
-
-
