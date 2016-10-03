@@ -91,3 +91,48 @@ Configure o arquivo named.conf.options conforme o modelo armazenado no repositó
 vim /etc/bind/named.conf.options
 service bind9 restart
 ```
+
+### Configuracao do DNS secundário ( zona slave ):
+
+Para esta etapa criaremos uma configuração de DNS secundário para a zona fiap.edu.br, nesse processo utilizaremos um host da família RedHat o que altera em alguns detalhes a localização dos arquivos e os padrões a serem aplicados:
+
+> Para registrarmos um domínio público, precisamos de pelo menos dois servidores "DNS" respondendo pelo seu domínio. Isso significa um servidor master e pelo menos um servidor slave. A exigência é uma forma de garantir que seu domínio estará sempre disponível.
+> Essa configuração é executada com base em declarações de zona, sendo assim, um mesmo servidor rodando BIND pode ser ao mesmo tempo master para alguns domínios, slave para outros, e "cache" para todo o resto.
+
+Inicie o processo de configuração instalando o bind9 em um servidor da Familia RedHat
+
+```sh
+yum install bind bind-utils
+vim /etc/named.conf
+```
+
+Abra o arquivo de configuração de zonas e adicione a configuração de zona abaixo:
+
+```sh
+zone "fiap.edu.br" IN {
+        type slave;
+        file "slave.rv.fiap.com.br";
+        masters { 192.168.1.2; };
+};
+
+zone "1.168.192.in-addr.arpa" IN {
+        type slave;
+        file "slave.db.fiap.com.br";
+        masters { 192.168.1.2; };
+};
+```
+
+Reinicie o serviço de DNS no proxy:
+
+```sh
+systemctl restart named
+```
+
+Faça os testes de resolução de nomes abaixo:
+
+```sh
+dig @127.0.0.1 ftp.fiap.edu.br +short
+dig @192.168.1.1 gateway.fiap.edu.br +short
+dig @192.168.1.1 fiap.com.br +short
+dig @192.168.1.1 -x 192.168.1.2 +short
+```
