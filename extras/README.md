@@ -4,7 +4,7 @@ profhelder.pereira@fiap.com.br
 ---
 # Multiplas entradas para serviços de e-mail
 
-É comum que se utilize mais de um backend de email para aumentar a disponibilidade de seu serviço, para que isso funcione seu DNS deverá prover algum mecanismo de balanceamento de carga entre todos os apontamentos criados, Por padrão utilizamos a definição de preferência do apontamento do tipo MX, essa configuração está prevista e descrita na [rfc974]();
+É comum que se utilize mais de um backend de email para aumentar a disponibilidade de seu serviço, para que isso funcione seu DNS deverá prover algum mecanismo de balanceamento de carga entre todos os apontamentos criados, Por padrão utilizamos a definição de preferência do apontamento do tipo MX, essa configuração está prevista e descrita na [rfc974](https://github.com/2TRCR/DNS/blob/master/rfcs/rfc974.txt);
 
 Basicamente cada entrada do tipo MX corresponde a um nome de domínio com dois pedaços de dados, uma refere-se ao valor de preferência (um 16-bit inteiro sem sinal), e o outro refere-se ao nome de um anfitrião, um domínio ou um endereço referente a um backend de email, O número de preferência é usado para indicar em que ordem o serviço de MTA deve tentar entregar a mensagem para os anfitriões MX, sempre do menor para o maior, ou seja, a menor entrada numerada refere-se ao MX s ser usado primeiro. Várias entradas MXs com a mesma preferências são permitidas e têm a mesma prioridade.
 
@@ -26,11 +26,11 @@ Por exemplo, considere os apontamentos de e-mail do yahoo e do google:
 
 Uma abordagem alternativa é definir vários registros A com o mesmo nome do servidor de correio, algo no formato abaixo:
 
-```sh
+
 mail	IN	A	192.168.1.7
 			192.168.1.8
 			192.168.1.9
-```
+
 
 # Ponteiros do tipo Round Robin
 

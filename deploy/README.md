@@ -9,8 +9,8 @@ O exemplo anterior serviu para esquentar um pouco e para entendermos a estrutura
 1 - Verifique se o pacote bind está instalado no ambiente ubuntu, caso não esteja execute a instalação e em seguida abra o arquivo de configuração de zonas ***named.conf.local***:
 
 ```sh
-apt-get install bind9
-vim /etc/bind/named.conf.local
+# apt-get install bind9
+# vim /etc/bind/named.conf.local
 ```
 
 > Lembre-se para algumas distribuições o arquivo original é o arquivo named.conf, no caso da familia Debian optou-se por utilizar uma hierarquia organizacional onde recomenda-se que as zonas sejam alocadas no arquivo named.conf.local e as opções de configuração e segurança no arquivo named.conf.options.
@@ -41,26 +41,26 @@ Configure a zona fiap.edu.br conforme o padrão salvo no repositorio git da aula
 Detalhes sobre cada tipo de ponteiro e sua funcao estao em comentarios no final do proprio arquivo de zona.
 
 ```sh
-vim /var/cache/bind/db.fiap.edu.br
+# vim /var/cache/bind/db.fiap.edu.br
 ```
 
 Verifique a zona criada utilizando o comando de checagem named-checkzone:
 
 ```sh
-named-checkzone fiap.com.br /var/cache/bind/db.fiap.edu.br
+# named-checkzone fiap.com.br /var/cache/bind/db.fiap.edu.br
 ```
 
 Após finalizar as configurações e testes execute a reinicialização do serviço:
 
 ```sh
-service bind9 restart
+# service bind9 restart
 ```
 
 Verifique se o resolve.conf aponta para seu proprio servidor e inicie os testes de sua zona usando o comando host:
 
 ```sh
-host gateway.fiap.edu.br
-dig proxy.fiap.edu.br +short
+# host gateway.fiap.edu.br
+# dig proxy.fiap.edu.br +short
 ```
 
 Faça novos testes com o comando dig verificando respectviamente:
@@ -71,10 +71,10 @@ Faça novos testes com o comando dig verificando respectviamente:
 - Acesso a partir do endereço de rede ao prcoesso de resolução de nomes.
 
 ```sh
-dit -t SOA fiap.edu.br
-dit -t NS fiap.edu.br
-dig -t x 192.168.1.3
-dig @192.168.1.2 web.fiap.edu.br
+# dig -t SOA fiap.edu.br
+# dig -t NS fiap.edu.br
+# dig -t x 192.168.1.3
+# dig @192.168.1.2 web.fiap.edu.br
 ```
 
 ### Limitando consultas e processos recursivos no bind:
@@ -88,8 +88,8 @@ Para executar essa configuração iremos simplesmente especificar o seguinte:
 Configure o arquivo named.conf.options conforme o modelo armazenado no repositório git da aula ( Arquivo [named.conf.options](https://github.com/2TRCR/DNS/blob/master/deploy/Debian/named.conf.options) ).
 
 ```sh
-vim /etc/bind/named.conf.options
-service bind9 restart
+# vim /etc/bind/named.conf.options
+# service bind9 restart
 ```
 
 ### Configuracao do DNS secundário ( zona slave ):
@@ -102,8 +102,8 @@ Para esta etapa criaremos uma configuração de DNS secundário para a zona fiap
 Inicie o processo de configuração instalando o bind9 em um servidor da Familia RedHat
 
 ```sh
-yum install bind bind-utils
-vim /etc/named.conf
+# yum install bind bind-utils
+# vim /etc/named.conf
 ```
 
 Abra o arquivo de configuração de zonas e adicione a configuração de zona abaixo:
@@ -125,8 +125,8 @@ zone "1.168.192.in-addr.arpa" IN {
 Reinicie o serviço de DNS no proxy:
 
 ```sh
-systemctl restart named
-systemctl status named
+# systemctl restart named
+# systemctl status named
 ```
 
 ***Importante:*** Para que a trasnferência de zona funcione corretamente seu firewall deverá estar devidamente configurado permitindo conexões entre qualquer porta alta do servidor slave ( origem da requisição ) e a porta 53 do servidor de destino o DNS master, Essas regras deverão ser criadas para os protocolos TCP/UDP e considerando as CHAINs de INPUT e OUTPUT.
@@ -135,8 +135,8 @@ systemctl status named
 Faça os testes de resolução de nomes abaixo:
 
 ```sh
-dig @127.0.0.1 ftp.fiap.edu.br +short
-dig @192.168.1.1 gateway.fiap.edu.br +short
-dig @192.168.1.1 fiap.com.br +short
-dig @192.168.1.1 -x 192.168.1.2 +short
+# dig @127.0.0.1 ftp.fiap.edu.br +short
+# dig @192.168.1.1 gateway.fiap.edu.br +short
+# dig @192.168.1.1 fiap.com.br +short
+# dig @192.168.1.1 -x 192.168.1.2 +short
 ```
