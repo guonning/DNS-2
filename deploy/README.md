@@ -37,7 +37,7 @@ As linhas acima descrevem o seguinte:
 4. O campo file determina one está o arquivo de zona, usamos a PATH completa apenas para fins didaticos pois, o diretório "/var/cache/bbind/" é a pasta default para armazenar arquivo de zona cofigurada automaticamente na instalação do bind9.
 5. A segunda zona configurada trata-se de uma zona reversa para resolução de nomes na rede local.
 
-Configure a zona fiap.edu.br conforme o padrão salvo no repositorio git da aula (  Arquivo db.fiap.edu.br), 
+Configure a zona fiap.edu.br conforme o padrão salvo no repositorio git da aula (  Arquivo [db.fiap.edu.br](https://github.com/2TRCR/DNS/blob/master/deploy/Debian/db.fiap.edu.br) ),
 Detalhes sobre cada tipo de ponteiro e sua funcao estao em comentarios no final do proprio arquivo de zona.
 
 ```sh
@@ -50,7 +50,7 @@ Verifique a zona criada utilizando o comando de checagem named-checkzone:
 named-checkzone fiap.com.br /var/cache/bind/db.fiap.edu.br
 ```
 
-Apos finalizar configurações e testes execute a reinicialização do serviço:
+Após finalizar as configurações e testes execute a reinicialização do serviço:
 
 ```sh
 service bind9 restart
@@ -85,7 +85,7 @@ Para executar essa configuração iremos simplesmente especificar o seguinte:
 - Quais dominios podem executar consultas ao nosso DNS  ***allow-query***
 - Quais dominios podem executar consultas recursivas através da opção ***allow-recursive***
 
-Configure o arquivo named.conf.options conforme o modelo armazenado no repositório git da aula ( Arquivo named.conf.options ).
+Configure o arquivo named.conf.options conforme o modelo armazenado no repositório git da aula ( Arquivo [named.conf.options](https://github.com/2TRCR/DNS/blob/master/deploy/Debian/named.conf.options) ).
 
 ```sh
 vim /etc/bind/named.conf.options
@@ -126,7 +126,11 @@ Reinicie o serviço de DNS no proxy:
 
 ```sh
 systemctl restart named
+systemctl status named
 ```
+
+***Importante:*** Para que a trasnferência de zona funcione corretamente seu firewall deverá estar devidamente configurado permitindo conexões entre qualquer porta alta do servidor slave ( origem da requisição ) e a porta 53 do servidor de destino o DNS master, Essas regras deverão ser criadas para os protocolos TCP/UDP e considerando as CHAINs de INPUT e OUTPUT.
+
 
 Faça os testes de resolução de nomes abaixo:
 
