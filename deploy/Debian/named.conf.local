@@ -15,7 +15,8 @@ zone "fiap.edu.br" {
 
 // Arquivo de configuração dos ponteiros reversos da zona
 
-zone "1.168.192.in-addr.arpa" {
+zone "56.168.192.in-addr.arpa" {
         type master;
-        file "/var/cache/bind/rv.fiap.edu.br";
+        file "/var/cache/bind/db.56.168.192";
+	allow-query { any; }; 
 };
