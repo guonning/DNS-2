@@ -6,6 +6,7 @@ $TTL 24h ; Tempo padrao para todos os registros sem TTL
 		8h ; refresh
 		1h ; retry
 		3d ; expire
+<<<<<<< HEAD
 		3h ; negative cache ttl
 		)
 @		IN	NS	ns1.fiap.edu.br.
@@ -14,6 +15,18 @@ ns2		IN	A	192.168.56.12
 
 		IN	MX	10 mail
 mail		IN	A	192.168.56.12
+=======
+		3h) ; negative cache ttl
+;
+@	IN	NS	ns1
+ns1	IN	A	192.168.1.2
+ns2	IN	A	192.168.1.1
+;
+gateway		IN	A	192.168.1.1
+proxy		IN	CNAME	gateway
+mail		IN	A	192.168.1.2
+mail		IN	MX	10 192.168.1.2
+>>>>>>> 286e6f34ef81c6a728d01aecee02d3eabfe46d0b
 smtp		IN	CNAME	mail
 pop		IN	CNAME	mail
 
